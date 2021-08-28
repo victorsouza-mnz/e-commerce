@@ -11,3 +11,28 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
 
     return [...cartItems, {...cartItemToAdd, quantity: 1 }]
 }
+
+
+export const clearItemFromCart = (cartItems, cartItemToClear) => {
+    return (
+        cartItems.filter(cartItem => cartItem !== cartItemToClear)
+    )
+}
+
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+    const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id)
+
+    if (existingCartItem.quantity === 1) {
+        return clearItemFromCart(cartItems, cartItemToRemove)
+    }
+    console.log('triggering')
+    return(
+        cartItems.map(cartItem => (
+            cartItem.id === cartItemToRemove.id ?
+            {...cartItem, quantity: cartItem.quantity-1}
+            :
+            cartItem
+        ))
+    )
+}
